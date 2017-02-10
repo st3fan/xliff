@@ -18,3 +18,25 @@ func Test_Parse(t *testing.T) {
 		t.Error("Could not parse testdata/focus-ios-it.xliff:", err)
 	}
 }
+
+func Test_IsValid(t *testing.T) {
+	doc, err := xliff.FromFile("testdata/focus-ios-ar.xliff")
+	if err != nil {
+		t.Error("Could not parse testdata/focus-ios-ar.xliff:", err)
+	}
+
+	if !doc.IsValid() {
+		t.Error("Unexpected result from doc.IsValid(). Got false, expected true")
+	}
+}
+
+func Test_IsComplete(t *testing.T) {
+	doc, err := xliff.FromFile("testdata/focus-ios-ar.xliff")
+	if err != nil {
+		t.Error("Could not parse testdata/focus-ios-ar.xliff:", err)
+	}
+
+	if doc.IsComplete() {
+		t.Error("Unexpected result from doc.IsComplete(). Got true, expected false")
+	}
+}
