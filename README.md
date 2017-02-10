@@ -1,6 +1,6 @@
 # XLIFF - Go Package to process XLIFF Files
 
-[![Build Status](https://travis-ci.org/st3fan/xliff.svg?branch=master)](https://travis-ci.org/st3fan/xliff)
+[![Build Status](https://travis-ci.org/st3fan/xliff.svg?branch=master)](https://travis-ci.org/st3fan/xliff) [![Go Report Card](https://goreportcard.com/badge/github.com/st3fan/xliff)](https://goreportcard.com/report/github.com/st3fan/xliff)
 
 *Stefan Arentz, February 2017*
 
