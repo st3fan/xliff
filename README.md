@@ -1,4 +1,7 @@
-# XLIFF
+# XLIFF - Go Package to process XLIFF Files
+
+[![Build Status](https://travis-ci.org/st3fan/xliff.svg?branch=master)](https://travis-ci.org/st3fan/xliff)
+
 *Stefan Arentz, February 2017*
 
 Work in progress.
