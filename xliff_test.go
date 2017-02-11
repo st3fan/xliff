@@ -5,6 +5,8 @@
 package xliff_test
 
 import (
+	"encoding/xml"
+	"os"
 	"testing"
 
 	"github.com/st3fan/xliff"
@@ -16,6 +18,19 @@ func Test_Parse(t *testing.T) {
 	}
 	if _, err := xliff.FromFile("testdata/focus-ios-it.xliff"); err != nil {
 		t.Error("Could not parse testdata/focus-ios-it.xliff:", err)
+	}
+}
+
+func Test_ParseNonExistentFile(t *testing.T) {
+	if _, err := xliff.FromFile("testdata/doesnotexist.xliff"); !os.IsNotExist(err) {
+		t.Error("Unexpected error when opening testdata/doesnotexist.xliff:", err)
+	}
+}
+
+func Test_ParseBadXMLFile(t *testing.T) {
+	_, err := xliff.FromFile("testdata/badxml.xliff")
+	if _, ok := err.(*xml.SyntaxError); !ok {
+		t.Error("Unexpected error when opening testdata/badxml.xliff:", err)
 	}
 }
 
