@@ -92,9 +92,20 @@ func Test_ValidateErrors(t *testing.T) {
 }
 
 func Test_IsComplete(t *testing.T) {
-	doc, err := xliff.FromFile("testdata/focus-ios-ar.xliff")
+	doc, err := xliff.FromFile("testdata/complete.xliff")
 	if err != nil {
-		t.Error("Could not parse testdata/focus-ios-ar.xliff:", err)
+		t.Error("Could not parse testdata/complete.xliff:", err)
+	}
+
+	if !doc.IsComplete() {
+		t.Error("Unexpected result from doc.IsComplete(). Got false, expected true")
+	}
+}
+
+func Test_IsInComplete(t *testing.T) {
+	doc, err := xliff.FromFile("testdata/incomplete.xliff")
+	if err != nil {
+		t.Error("Could not parse testdata/incomplete.xliff:", err)
 	}
 
 	if doc.IsComplete() {
