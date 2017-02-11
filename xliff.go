@@ -67,7 +67,30 @@ type ValidationError struct {
 }
 
 func (ve ValidationError) Error() string {
-	return fmt.Sprintf("%d: %s", ve.Code, ve.Message)
+	code := "Unknown"
+	switch ve.Code {
+	case UnsupportedVersion:
+		code = "UnsupportedVersion"
+	case MissingOriginalAttribute:
+		code = "MissingOriginalAttribute"
+	case MissingSourceLanguage:
+		code = "MissingSourceLanguage"
+	case MissingTargetLanguage:
+		code = "MissingTargetLanguage"
+	case UnsupportedDatatype:
+		code = "UnsupportedDatatype"
+	case InconsistentSourceLanguage:
+		code = "InconsistentSourceLanguage"
+	case InconsistentTargetLanguage:
+		code = "InconsistentTargetLanguage"
+	case MissingTransUnitID:
+		code = "MissingTransUnitID"
+	case MissingTransUnitSource:
+		code = "MissingTransUnitSource"
+	case MissingTransUnitTarget:
+		code = "MissingTransUnitTarget"
+	}
+	return fmt.Sprintf("%s: %s", code, ve.Message)
 }
 
 func FromFile(path string) (Document, error) {

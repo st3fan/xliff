@@ -7,6 +7,7 @@ package xliff_test
 import (
 	"encoding/xml"
 	"os"
+	"strings"
 	"testing"
 
 	"github.com/st3fan/xliff"
@@ -103,6 +104,23 @@ func Test_ValidateErrors(t *testing.T) {
 
 	if !containsValidationError(errors, xliff.MissingTransUnitTarget) {
 		t.Error("Expected validation to fail with MissingTransUnitTarget")
+	}
+}
+
+func TestValidationErrorString(t *testing.T) {
+	doc, err := xliff.FromFile("testdata/errors.xliff")
+	if err != nil {
+		t.Error("Could not parse testdata/errors.xliff:", err)
+	}
+
+	errors := doc.Validate()
+	if len(errors) == 0 {
+		t.Error("Expected error from Validate()")
+	}
+
+	msg := errors[0].Error()
+	if !strings.HasPrefix(msg, "UnsupportedVersion: ") {
+		t.Error("Error string does not match error")
 	}
 }
 
