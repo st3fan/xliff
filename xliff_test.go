@@ -19,14 +19,26 @@ func Test_Parse(t *testing.T) {
 	}
 }
 
-func Test_Validate(t *testing.T) {
-	doc, err := xliff.FromFile("testdata/focus-ios-ar.xliff")
+func Test_ValidateGood(t *testing.T) {
+	doc, err := xliff.FromFile("testdata/good.xliff")
 	if err != nil {
-		t.Error("Could not parse testdata/focus-ios-ar.xliff:", err)
+		t.Error("Could not parse testdata/good.xliff:", err)
 	}
 
-	if err := doc.Validate(); err != nil {
+	if errors := doc.Validate(); errors != nil {
 		t.Error("Unexpected error from Validate()")
+	}
+}
+
+func Test_ValidateErrors(t *testing.T) {
+	doc, err := xliff.FromFile("testdata/errors.xliff")
+	if err != nil {
+		t.Error("Could not parse testdata/errors.xliff:", err)
+	}
+
+	errors := doc.Validate()
+	if len(errors) == 0 {
+		t.Error("Expected error from Validate()")
 	}
 }
 

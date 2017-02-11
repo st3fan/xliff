@@ -85,41 +85,43 @@ func FromFile(path string) (Document, error) {
 }
 
 // Returns true if the document passes some basic consistency checks.
-func (d Document) Validate() error {
+func (d Document) Validate() []ValidationError {
+	var errors []ValidationError
+
 	// Make sure the document is a version we understand
 	if d.Version != "1.2" {
-		return ValidationError{
+		errors = append(errors, ValidationError{
 			Code:    UnsupportedVersion,
 			Message: fmt.Sprintf("Version %s is not supported", d.Version),
-		}
+		})
 	}
 
 	// Make sure all files have the attributes we need
 	for idx, file := range d.Files {
 		if file.Original == "" {
-			return ValidationError{
+			errors = append(errors, ValidationError{
 				Code:    MissingOriginalAttribute,
 				Message: fmt.Sprintf("File #%d is missing 'original' attribute", idx),
-			}
+			})
 		}
 		if file.SourceLanguage == "" {
-			return ValidationError{
+			errors = append(errors, ValidationError{
 				Code:    MissingSourceLanguage,
 				Message: fmt.Sprintf("File '%s' is missing 'source-language' attribute", file.Original),
-			}
+			})
 		}
 		if file.TargetLanguage == "" {
-			return ValidationError{
+			errors = append(errors, ValidationError{
 				Code:    MissingTargetLanguage,
 				Message: fmt.Sprintf("File '%s' is missing 'target-language' attribute", file.Original),
-			}
+			})
 		}
 		if file.Datatype != "plaintext" {
-			return ValidationError{
+			errors = append(errors, ValidationError{
 				Code: UnsupportedDatatype,
 				Message: fmt.Sprintf("File '%s' has unsupported 'datatype' attribute with value '%s'",
 					file.Original, file.Datatype),
-			}
+			})
 		}
 	}
 
@@ -127,18 +129,18 @@ func (d Document) Validate() error {
 	sourceLanguage, targetLanguage := d.Files[0].SourceLanguage, d.Files[0].TargetLanguage
 	for _, file := range d.Files {
 		if file.SourceLanguage != sourceLanguage {
-			return ValidationError{
+			errors = append(errors, ValidationError{
 				Code: InconsistentSourceLanguage,
 				Message: fmt.Sprintf("File '%s' has inconsistent 'source-language' attribute '%s'",
 					file.Original, file.SourceLanguage),
-			}
+			})
 		}
 		if file.TargetLanguage != targetLanguage {
-			return ValidationError{
+			errors = append(errors, ValidationError{
 				Code: InconsistentTargetLanguage,
 				Message: fmt.Sprintf("File '%s' has inconsistent 'target-language' attribute '%s'",
 					file.Original, file.TargetLanguage),
-			}
+			})
 		}
 	}
 
@@ -146,22 +148,30 @@ func (d Document) Validate() error {
 	for _, file := range d.Files {
 		for idx, transUnit := range file.Body.TransUnits {
 			if transUnit.ID == "" {
-				return ValidationError{
+				errors = append(errors, ValidationError{
 					Code: MissingTransUnitID,
 					Message: fmt.Sprintf("Translation unit #%d in file '%s' is missing 'id' attribute",
 						idx, file.Original),
-				}
+				})
 			}
 			if transUnit.Source == "" {
-				return ValidationError{
+				errors = append(errors, ValidationError{
 					Code: MissingTransUnitSource,
 					Message: fmt.Sprintf("Translation unit '%s' in file '%s' is missing 'source' attribute",
 						transUnit.ID, file.Original),
-				}
+				})
+			}
+			if transUnit.Target == "" {
+				errors = append(errors, ValidationError{
+					Code: MissingTransUnitTarget,
+					Message: fmt.Sprintf("Translation unit '%s' in file '%s' is missing 'target' attribute",
+						transUnit.ID, file.Original),
+				})
 			}
 		}
 	}
-	return nil
+
+	return errors
 }
 
 // Returns true if all translation units in all files have both a

@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.1" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.1 http://docs.oasis-open.org/xliff/v1.1/os/xliff-core-1.1-strict.xsd">
+  <file original="One.strings" source-language="en" datatype="plaintext" target-language="nl">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="8.2.1" build-num="8C1002"/>
+    </header>
+    <body>
+      <trans-unit id="MissingSource">
+        <target>Hallo, wereld!</target>
+      </trans-unit>
+      <trans-unit id="MissingTarget">
+        <source>Hello, world!</source>
+      </trans-unit>
+      <trans-unit>
+        <source>Hello, world!</source>
+        <target>Hallo, wereld!</target>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="InconsistentSourceLanguage" source-language="de" datatype="plaintext" target-language="nl">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="8.2.1" build-num="8C1002"/>
+    </header>
+    <body>
+    </body>
+  </file>
+  <file original="InconsistentTargetLanguage" source-language="en" datatype="plaintext" target-language="fr">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="8.2.1" build-num="8C1002"/>
+    </header>
+    <body>
+    </body>
+  </file>
+</xliff>
+
