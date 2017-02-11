@@ -17,6 +17,14 @@
       </trans-unit>
     </body>
   </file>
+  <file source-language="en" datatype="plaintext" target-language="nl">
+  </file>
+  <file original="MissingSourceLanguage.strings" datatype="plaintext" target-language="nl">
+  </file>
+  <file original="MissingTargetLanguage.strings" source-language="en" datatype="plaintext">
+  </file>
+  <file original="UnsupportedDatatype.strings" source-language="en" datatype="cheese" target-language="nl">
+  </file>
   <file original="InconsistentSourceLanguage" source-language="de" datatype="plaintext" target-language="nl">
     <header>
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="8.2.1" build-num="8C1002"/>

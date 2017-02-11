@@ -30,6 +30,15 @@ func Test_ValidateGood(t *testing.T) {
 	}
 }
 
+func containsValidationError(errors []xliff.ValidationError, code xliff.ValidationErrorCode) bool {
+	for _, err := range errors {
+		if err.Code == code {
+			return true
+		}
+	}
+	return false
+}
+
 func Test_ValidateErrors(t *testing.T) {
 	doc, err := xliff.FromFile("testdata/errors.xliff")
 	if err != nil {
@@ -39,6 +48,46 @@ func Test_ValidateErrors(t *testing.T) {
 	errors := doc.Validate()
 	if len(errors) == 0 {
 		t.Error("Expected error from Validate()")
+	}
+
+	if !containsValidationError(errors, xliff.UnsupportedVersion) {
+		t.Error("Expected validation to fail with UnsupportedVersion")
+	}
+
+	if !containsValidationError(errors, xliff.MissingOriginalAttribute) {
+		t.Error("Expected validation to fail with MissingOriginalAttribute")
+	}
+
+	if !containsValidationError(errors, xliff.MissingSourceLanguage) {
+		t.Error("Expected validation to fail with MissingSourceLanguage")
+	}
+
+	if !containsValidationError(errors, xliff.MissingTargetLanguage) {
+		t.Error("Expected validation to fail with MissingTargetLanguage")
+	}
+
+	if !containsValidationError(errors, xliff.UnsupportedDatatype) {
+		t.Error("Expected validation to fail with UnsupportedDatatype")
+	}
+
+	if !containsValidationError(errors, xliff.InconsistentSourceLanguage) {
+		t.Error("Expected validation to fail with InconsistentSourceLanguage")
+	}
+
+	if !containsValidationError(errors, xliff.InconsistentTargetLanguage) {
+		t.Error("Expected validation to fail with InconsistentTargetLanguage")
+	}
+
+	if !containsValidationError(errors, xliff.MissingTransUnitID) {
+		t.Error("Expected validation to fail with MissingTransUnitID")
+	}
+
+	if !containsValidationError(errors, xliff.MissingTransUnitSource) {
+		t.Error("Expected validation to fail with MissingTransUnitSource")
+	}
+
+	if !containsValidationError(errors, xliff.MissingTransUnitTarget) {
+		t.Error("Expected validation to fail with MissingTransUnitTarget")
 	}
 }
 
