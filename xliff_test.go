@@ -131,3 +131,17 @@ func Test_IsInComplete(t *testing.T) {
 		t.Error("Unexpected result from doc.IsComplete(). Got true, expected false")
 	}
 }
+
+func Test_File(t *testing.T) {
+	doc, err := xliff.FromFile("testdata/complete.xliff")
+	if err != nil {
+		t.Error("Could not parse testdata/complete.xliff:", err)
+	}
+
+	if _, found := doc.File("One.strings"); found != true {
+		t.Error("Unexpected result from doc.File(One.strings)")
+	}
+	if _, found := doc.File("Unknown.strings"); found != false {
+		t.Error("Unexpected result from doc.File(Unknown.strings)")
+	}
+}

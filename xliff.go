@@ -209,3 +209,12 @@ func (d Document) IsComplete() bool {
 	}
 	return true
 }
+
+func (d Document) File(original string) (File, bool) {
+	for _, file := range d.Files {
+		if file.Original == original {
+			return file, true
+		}
+	}
+	return File{}, false
+}
