@@ -5,7 +5,7 @@
 
 *Stefan Arentz, February 2017*
 
-Work in progress.
+Work in progress. You can see it in action in the `validate-xliff` tool at [st3fan/validate-xliff](https://github.com/st3fan/validate-xliff)
 
 This is a tiny package to parse `.xliff` files.
 
