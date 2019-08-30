@@ -10,6 +10,8 @@ import (
 	"io/ioutil"
 )
 
+const CurrentVersion = "1.2"
+
 type Tool struct {
 	ToolID      string `xml:"tool-id,attr"`
 	ToolName    string `xml:"tool-name,attr"`
@@ -112,7 +114,7 @@ func (d Document) Validate() []ValidationError {
 	var errors []ValidationError
 
 	// Make sure the document is a version we understand
-	if d.Version != "1.2" {
+	if d.Version != CurrentVersion {
 		errors = append(errors, ValidationError{
 			Code:    UnsupportedVersion,
 			Message: fmt.Sprintf("Version %s is not supported", d.Version),
