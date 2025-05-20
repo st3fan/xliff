@@ -107,7 +107,11 @@ func FromFile(path string) (Document, error) {
 	return document, nil
 }
 
-// Returns true if the document passes some basic consistency checks.
+// Validate checks if the document is structurally valid according to the XLIFF schema.
+// It returns a list of validation errors if any validation rules are violated.
+// Note that this function only checks the structural validity, not whether all translations
+// are complete. Empty or missing targets make a document incomplete, but not invalid.
+// Use IsComplete() to check for completeness instead.
 func (d Document) Validate() []ValidationError {
 	var errors []ValidationError
 
@@ -184,9 +188,6 @@ func (d Document) Validate() []ValidationError {
 						transUnit.ID, file.Original),
 				})
 			}
-			// Note: We intentionally don't check for empty target attributes here.
-			// Empty or missing targets make a document incomplete, but not invalid.
-			// Use IsComplete() to check for completeness instead.
 		}
 	}
 

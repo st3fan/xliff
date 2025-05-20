@@ -104,8 +104,6 @@ func Test_ValidateErrors(t *testing.T) {
 	if !containsValidationError(t, errors, xliff.MissingTransUnitSource) {
 		t.Error("Expected validation to fail with MissingTransUnitSource")
 	}
-
-	// Note: We no longer check for missing targets in Validate() as they're handled by IsComplete() instead
 }
 
 func Test_IsComplete(t *testing.T) {
