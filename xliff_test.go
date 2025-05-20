@@ -104,10 +104,6 @@ func Test_ValidateErrors(t *testing.T) {
 	if !containsValidationError(t, errors, xliff.MissingTransUnitSource) {
 		t.Error("Expected validation to fail with MissingTransUnitSource")
 	}
-
-	if !containsValidationError(t, errors, xliff.MissingTransUnitTarget) {
-		t.Error("Expected validation to fail with MissingTransUnitTarget")
-	}
 }
 
 func Test_IsComplete(t *testing.T) {
@@ -127,6 +123,23 @@ func Test_IsInComplete(t *testing.T) {
 		t.Error("Could not parse testdata/incomplete.xliff:", err)
 	}
 
+	if doc.IsComplete() {
+		t.Error("Unexpected result from doc.IsComplete(). Got true, expected false")
+	}
+}
+
+func Test_ValidateIncomplete(t *testing.T) {
+	doc, err := xliff.FromFile("testdata/incomplete.xliff")
+	if err != nil {
+		t.Error("Could not parse testdata/incomplete.xliff:", err)
+	}
+
+	// An incomplete file should still pass validation
+	if errors := doc.Validate(); len(errors) > 0 {
+		t.Error("Unexpected validation errors for incomplete file:", errors)
+	}
+
+	// But it should be detected as incomplete
 	if doc.IsComplete() {
 		t.Error("Unexpected result from doc.IsComplete(). Got true, expected false")
 	}
