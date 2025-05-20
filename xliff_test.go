@@ -105,9 +105,8 @@ func Test_ValidateErrors(t *testing.T) {
 		t.Error("Expected validation to fail with MissingTransUnitSource")
 	}
 
-	if !containsValidationError(t, errors, xliff.MissingTransUnitTarget) {
-		t.Error("Expected validation to fail with MissingTransUnitTarget")
-	}
+	// Removed test for MissingTransUnitTarget as per issue #5
+	// We no longer consider missing target as a validation error
 }
 
 func Test_IsComplete(t *testing.T) {
