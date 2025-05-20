@@ -145,3 +145,24 @@ func Test_File(t *testing.T) {
 		t.Error("Unexpected result from doc.File(Unknown.strings)")
 	}
 }
+
+func Test_ValidateIncomplete(t *testing.T) {
+	doc, err := xliff.FromFile("testdata/incomplete.xliff")
+	if err != nil {
+		t.Error("Could not parse testdata/incomplete.xliff:", err)
+	}
+
+	// Validation should pass on incomplete but otherwise correct files
+	errors := doc.Validate()
+	if len(errors) > 0 {
+		t.Error("Validation should not fail on incomplete files")
+		for _, err := range errors {
+			t.Error("  ", err)
+		}
+	}
+
+	// IsComplete should still correctly identify it as incomplete
+	if doc.IsComplete() {
+		t.Error("Expected incomplete file to be identified as incomplete")
+	}
+}
