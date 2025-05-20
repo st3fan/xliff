@@ -184,13 +184,9 @@ func (d Document) Validate() []ValidationError {
 						transUnit.ID, file.Original),
 				})
 			}
-			if transUnit.Target == "" {
-				errors = append(errors, ValidationError{
-					Code: MissingTransUnitTarget,
-					Message: fmt.Sprintf("Translation unit '%s' in file '%s' is missing 'target' attribute",
-						transUnit.ID, file.Original),
-				})
-			}
+			// Note: We intentionally don't check for empty target attributes here.
+			// Empty or missing targets make a document incomplete, but not invalid.
+			// Use IsComplete() to check for completeness instead.
 		}
 	}
 
